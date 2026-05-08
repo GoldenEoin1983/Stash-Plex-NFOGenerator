@@ -1,0 +1,60 @@
+name: Plex Export Tools
+description: Rename files & generate XBMC NFOs for Plex migration
+version: 1.0
+interface: raw
+settings:
+  studio_filter:
+    displayName: Studio Filter (Optional)
+    description: Exact studio name to process. Leave empty for ALL scenes.
+    type: STRING
+  dry_run:
+    displayName: Dry Run (Rename/NFO)
+    description: Preview actions without touching disk.
+    type: BOOLEAN
+    default: true
+  rollback_apply:
+    displayName: Execute Rollback (WARNING)
+    description: UNCHECKED = Dry Run. CHECKED = Permanently reverses last session.
+    type: BOOLEAN
+    default: false
+  actor_save_mode:
+    displayName: Actor Image Save Mode
+    description: Enter 'PER_SCENE' or 'CENTRAL'.
+    type: STRING
+    default: "PER_SCENE"
+  actor_central_dir:
+    displayName: Central Actor Folder Path
+    description: 'REQUIRED IF CENTRAL. Must be inside Docker volumes & match a Stash Library path.'
+    type: STRING
+tasks:
+  - name: Rename Scenes
+    description: Rename media files to Plex format: Title (Year).ext
+    exec:
+      python3
+      "{pluginDir}/stash_rename.py"
+    defaultArgs:
+      studio: "${studio_filter}"
+      dry_run: "${dry_run}"
+  - name: Generate NFOs
+    description: Create movie.nfo files next to each scene for Plex ingestion
+    exec:
+      python3
+      "{pluginDir}/stash_nfo_generator.py"
+    defaultArgs:
+      studio: "${studio_filter}"
+      dry_run: "${dry_run}"
+  - name: Rollback Last Run
+    description: Reverse the most recent migration actions using the log file
+    exec:
+      python3
+      "{pluginDir}/stash_plex_rollback.py"
+    defaultArgs:
+      apply: "${rollback_apply}"
+  - name: Process Actor Images
+    description: Batch crops performer faces (500x500) and distributes them. May take a while.
+    exec:
+      python3
+      "{pluginDir}/stash_plex_actor_processor.py"
+    defaultArgs:
+      actor_save_mode: "${actor_save_mode}"
+      actor_central_dir: "${actor_central_dir}"
