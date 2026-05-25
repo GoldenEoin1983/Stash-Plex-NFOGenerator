@@ -1,0 +1,13 @@
+---
+description: Stash-Plex safety and plugin I/O contracts
+alwaysApply: true
+---
+
+# Stash-Plex exporter — agent constraints
+
+- Read `ROADMAP.md` and `AGENTS.md` before editing.
+- Default to **dry-run** for any file rename, write, or delete.
+- **stdout** must be only one JSON object: `{"output":"...","error":null}`. Log to **stderr** and `stash_plex_migration.log`.
+- Paginate all GraphQL queries; never assume one page has all results.
+- After renames, document that the user must run Stash **Scan Library** before NFO/asset steps.
+- Update `ROADMAP.md` checkboxes when finishing a task the user requested.

@@ -33,16 +33,28 @@ Migrate Stash-managed scenes to Plex Media Server with zero manual metadata entr
 
 ---
 
+## 📋 Planning & AI context
+
+| File | Who it's for |
+|------|----------------|
+| [`ROADMAP.md`](ROADMAP.md) | **You** — what's done, in progress, and next |
+| [`AGENTS.md`](AGENTS.md) | **Cursor / AI** — architecture, contracts, safety |
+| `Stashapp Library Migration to Plex - Project Context Document.md` | Detailed MUST/SHOULD rules |
+
+When starting a Cursor chat, try: *"Read ROADMAP.md and continue the in-progress item."*
+
 ## 📦 Project Structure
 
 stash-plex-exporter/
 ├── README.md # Project documentation
+├── ROADMAP.md # Progress tracker (done / next / backlog)
 ├── AGENTS.md # AI/LLM context & architecture guide
 ├── plex_exporter.yml # Stash plugin configuration
 ├── requirements.txt # Python dependencies
 ├── .gitignore # Standard exclusions
 ├── stash_rename.py # Scene file renaming logic
 ├── stash_nfo_generator.py # XBMC NFO generation with performer data
+├── stash_nfo_assets.py # Plex local images (poster, fanart, logo, square)
 ├── stash_face_cropper.py # OpenCV face detection & 500x500 cropping
 ├── stash_plex_actor_processor.py # Batch actor processing & distribution
 └── stash_plex_rollback.py # Session-scoped undo tool
@@ -89,7 +101,10 @@ Verify tasks appear on the Tasks page.
 Leave Dry Run: true
 Click Rename Scenes → Verify stash_plex_migration.log
 Click Generate NFOs → Verify log
+Click Generate Plex Assets → Verify log (poster/fanart/logo/square dry-run lines)
 Click Process Actor Images → Verify cropping/distribution log
+
+See [`DRY_RUN_CHECKLIST.md`](DRY_RUN_CHECKLIST.md) for a full step-by-step dry-run walkthrough.
 
 ### 3️⃣ Apply Changes
 
@@ -97,6 +112,7 @@ Uncheck Dry Run
 Run Rename Scenes
 ⚠️ CRITICAL: In Stash UI → Tasks → Scan Library (keep "Generate Fingerprints" enabled)
 Run Generate NFOs
+Run Generate Plex Assets
 Run Process Actor Images (if not done in dry-run)
 Point Plex to your media folder → Scan → Enjoy local metadata.
 

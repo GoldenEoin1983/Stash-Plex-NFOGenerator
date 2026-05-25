@@ -1,6 +1,6 @@
 name: Plex Export Tools
 description: Rename files & generate XBMC NFOs for Plex migration
-version: 1.0
+version: 1.1
 interface: raw
 settings:
   studio_filter:
@@ -8,7 +8,7 @@ settings:
     description: Exact studio name to process. Leave empty for ALL scenes.
     type: STRING
   dry_run:
-    displayName: Dry Run (Rename/NFO)
+    displayName: Dry Run (Rename/NFO/Assets)
     description: Preview actions without touching disk.
     type: BOOLEAN
     default: true
@@ -40,6 +40,14 @@ tasks:
     exec:
       python3
       "{pluginDir}/stash_nfo_generator.py"
+    defaultArgs:
+      studio: "${studio_filter}"
+      dry_run: "${dry_run}"
+  - name: Generate Plex Assets
+    description: Download poster, fanart, logo, and square images next to each scene (run after NFOs)
+    exec:
+      python3
+      "{pluginDir}/stash_nfo_assets.py"
     defaultArgs:
       studio: "${studio_filter}"
       dry_run: "${dry_run}"
