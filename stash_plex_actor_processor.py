@@ -66,10 +66,11 @@ def main():
     conn, args = get_connection()
     session, url = build_session(conn)
     
+    dry_run = str(args.get("dry_run", "true")).lower() in ("true", "1", "yes")
     mode = args.get("actor_save_mode", "PER_SCENE").strip().upper()
     central_dir = args.get("actor_central_dir", "").strip()
-    
-    log.info(f"[SESSION] actor_processing start | mode={mode} | timestamp={datetime.now().isoformat()}")
+
+    log.info(f"[SESSION] actor_processing start | dry_run={dry_run} | mode={mode} | timestamp={datetime.now().isoformat()}")
     
     if mode == "CENTRAL":
         if not central_dir:
@@ -98,20 +99,27 @@ def main():
             
             if mode == "CENTRAL":
                 dest = os.path.join(central_dir, f"{name}.jpg")
-                shutil.copy2(cropped, dest)
-                log.info(f"📁 [{i+1}/{len(performers)}] {name} -> {dest}")
+                if dry_run:
+                    log.info(f"LOG_TYPE:ACTOR_DRY_RUN | [{i+1}/{len(performers)}] {name} -> {dest}")
+                else:
+                    shutil.copy2(cropped, dest)
+                    log.info(f"LOG_TYPE:ACTOR_COPIED | [{i+1}/{len(performers)}] {name} -> {dest}")
             else:
                 scene_dirs = get_scene_dirs_for_performer(session, url, p["id"])
                 if not scene_dirs:
-                    log.info(f"🎬 [{i+1}/{len(performers)}] {name} has no scenes. Skipped.")
+                    log.info(f"LOG_TYPE:ACTOR_NO_SCENES | [{i+1}/{len(performers)}] {name}")
                     skipped += 1; continue
-                    
+
                 for d in scene_dirs:
                     actor_dir = os.path.join(d, ".actor")
-                    os.makedirs(actor_dir, exist_ok=True)
                     dest = os.path.join(actor_dir, f"{name}.jpg")
-                    shutil.copy2(cropped, dest)
-                log.info(f"🎬 [{i+1}/{len(performers)}] {name} copied to {len(scene_dirs)} scene(s).")
+                    if dry_run:
+                        log.info(f"LOG_TYPE:ACTOR_DRY_RUN | [{i+1}/{len(performers)}] {name} -> {dest}")
+                    else:
+                        os.makedirs(actor_dir, exist_ok=True)
+                        shutil.copy2(cropped, dest)
+                if not dry_run:
+                    log.info(f"LOG_TYPE:ACTOR_COPIED | [{i+1}/{len(performers)}] {name} -> {len(scene_dirs)} scene(s)")
             processed += 1
         except Exception as e:
             log.error(f"❌ [{i+1}/{len(performers)}] {name}: {e}")

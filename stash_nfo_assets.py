@@ -233,11 +233,13 @@ def main():
                         galleries = scene.get("galleries", [])
                         if galleries and galleries[0].get("id"):
                             img_url = build_stash_image_url(base_url, "gallery", galleries[0]["id"])
-                    elif fname in ("logo.png", "square.jpg"):
+                    elif fname == "logo.png":
                         studio_obj = scene.get("studio") or {}
                         studio = studio_obj if studio_obj.get("id") else (studio_obj.get("parent_studio") or {})
                         if studio.get("id"):
                             img_url = build_stash_image_url(base_url, "studio", studio["id"])
+                    elif fname == "square.jpg":
+                        img_url = build_stash_image_url(base_url, "scene", scene_id)
                             
                     if img_url:
                         if download_image(session, img_url, dest, dry_run):
@@ -264,24 +266,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-### 🔑 Integration Highlights
-#
-#| Feature | Implementation |
-#|---------|----------------|
-#| **Auto-Scan Trigger** | `trigger_stash_scan()` fires post-loop with deduplicated `modified_dirs` |
-#| **Partial Scan Support** | Passes `paths: [String!]` to Stash `scanLibrary` mutation |
-#| **Async Execution** | Mutation returns immediately; Stash queues scan in background |
-#| **Dry-Run Safe** | Logs `LOG_TYPE:SCAN_DRY_RUN` without firing API when `dry_run=True` |
-#| **Directory Tracking** | `modified_dirs.add(scene_dir)` triggers on successful NFO/asset resolution |
-#| **Multi-File Guard** | `len(scene.files) > 1` check prevents partial scans on ambiguous paths |
-#
-### 🧪 Verification Steps
-#
-#1. Run with `dry_run=true` → Check log for `LOG_TYPE:SCAN_DRY_RUN | PATHS:[...]`
-#2. Run with `dry_run=false` → Verify `LOG_TYPE:SCAN_TRIGGERED` appears
-#3. Open Stash UI → `Tasks` tab → Confirm `Scan` job queued immediately
-#4. Verify renamed/updated files reattach without full library scan
-#5. Check `stash_plex_migration.log` matches `LOG_TYPE:*` regex patterns
-#
-#The `v2.0 Backlog` item `Auto-trigger Stash scan post-rename` is now **Implemented**. Let me know if you want the scan flags (`generateSprites`, `scanGeneratePhashes`) exposed via plugin settings.

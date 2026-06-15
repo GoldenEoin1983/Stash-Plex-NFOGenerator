@@ -17,7 +17,7 @@ Automate Stash → Plex migration: rename files, generate local metadata (NFO + 
 
 **v1.1 — Gallery & poster assets** (branch: `Incorporating-Galleries`)
 
-Core rename/NFO/actor/rollback tools exist on `master`. Active work adds Plex-local assets (`poster`, `background`, `logo`, `square`) via `stash_nfo_assets.py`.
+Core rename/NFO/actor/rollback tools exist on `main`. Active work adds Plex-local assets (`poster`, `background`, `logo`, `square`) via `stash_nfo_assets.py`.
 
 ---
 
@@ -31,7 +31,7 @@ Core rename/NFO/actor/rollback tools exist on `master`. Active work adds Plex-lo
 - [x] Session-scoped rollback (`stash_plex_rollback.py`)
 - [x] Agent architecture guide (`AGENTS.md`)
 - [x] Human README + project rules doc
-- [x] Git repo on GitHub with `master` + feature branches
+- [x] Git repo on GitHub with `main` + feature branches
 - [x] Draft poster/gallery asset script (`stash_nfo_assets.py`)
 - [x] Wire **Generate Plex Assets** task in `plex_exporter.yml` (v1.1)
 
@@ -39,7 +39,7 @@ Core rename/NFO/actor/rollback tools exist on `master`. Active work adds Plex-lo
 
 ## In progress
 
-- [ ] **Gallery/poster support** — dry-run test on ≤5 scenes using [`DRY_RUN_CHECKLIST.md`](DRY_RUN_CHECKLIST.md), then merge branch to `master`
+- [ ] **Gallery/poster support** — dry-run test on ≤5 scenes using [`DRY_RUN_CHECKLIST.md`](DRY_RUN_CHECKLIST.md), then merge branch to `main`
 
 ---
 
@@ -49,13 +49,13 @@ Core rename/NFO/actor/rollback tools exist on `master`. Active work adds Plex-lo
 
 1. [ ] Dry-run test the full pipeline on one small studio (≤5 scenes) — follow [`DRY_RUN_CHECKLIST.md`](DRY_RUN_CHECKLIST.md)
 3. [ ] Verify Plex ingests `movie.nfo` + poster/background files from a single test folder
-4. [ ] Merge `Incorporating-Galleries` → `master` via pull request when tests pass
+4. [ ] Merge `Incorporating-Galleries` → `main` via pull request when tests pass
 5. [ ] Remove or repurpose placeholder `main.py` (uv scaffold only; not used by Stash plugin)
 
 ### Repository & AI workflow
 
 6. [ ] Open GitHub **Issues** for each backlog item you care about (templates below)
-7. [ ] Tag releases on `master` after each stable milestone (`v1.0`, `v1.1`, …)
+7. [ ] Tag releases on `main` after each stable milestone (`v1.0`, `v1.1`, …)
 8. [ ] Add a minimal test script or `scripts/dry_run_check.sh` that validates NFO XML shape (optional but high value)
 
 ---
@@ -91,7 +91,7 @@ From `AGENTS.md` and design notes — not started unless moved to "Next up":
 ## Git workflow (beginner cheat sheet)
 
 ```text
-master          ← stable, tested code
+main          ← stable, tested code
   └── feature-branch   ← one feature per branch (you are here: Incorporating-Galleries)
 ```
 
@@ -101,7 +101,7 @@ master          ← stable, tested code
 | Save work | `git add <files>` then `git commit -m "short description"` |
 | Push to GitHub | `git push` |
 | Merge safely | Open a **Pull Request** on GitHub; review diff; merge when happy |
-| Start new feature | `git checkout master` → `git pull` → `git checkout -b my-new-feature` |
+| Start new feature | `git checkout main` → `git pull` → `git checkout -b my-new-feature` |
 
 **Rule of thumb:** Never run destructive Stash tasks with dry-run off until you've previewed the same studio in dry-run and checked `stash_plex_migration.log`.
 
