@@ -17,7 +17,7 @@ Pick one studio with **≤5 scenes** and note its exact name for the Studio Filt
 ### Plugin settings (leave these for dry-run)
 
 | Setting | Value |
-|---------|--------|
+|---------|-------|
 | Studio Filter | Your test studio name (exact match) |
 | Dry Run | **ON** (checked / true) |
 | Execute Rollback | **OFF** |
@@ -135,7 +135,7 @@ square.jpg      (if scene cover exists)
 ## Quick troubleshooting
 
 | Symptom | Likely cause |
-|---------|----------------|
+|---------|--------------|
 | `NFO_MISSING` for every scene | Run **Generate NFOs** before assets (or paths don't match renamed files) |
 | `SKIP_MULTI_FILE` | Scene has multiple files; only first file path is used by design |
 | No images in dry-run | Expected — look for `IMAGE_DRY_RUN`, not files on disk |

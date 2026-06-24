@@ -1,3 +1,4 @@
+.cursor
 __pycache__/
 *.pyc
 *.pyo
@@ -6,3 +7,5 @@ stash_plex_migration.log
 *.log
 .DS_Store
 Thumbs.db
+.venv
+.kilo

@@ -23,7 +23,8 @@ Migrate Stash-managed scenes to Plex Media Server with zero manual metadata entr
 | Feature | Description |
 |---------|-------------|
 | **Plex Naming** | `Title (Year).ext` with safe character sanitization & collision handling |
-| **XBMC NFO Spec** | Strict `<title>`, `<year>`, `<releasedate>`, `<studio>`, `<collection>`, `<actor>` structure |
+| **XBMC NFO Spec** | Strict `<title>`, `<year>`, `<premiered>`, `<releasedate>`, `<studio>`, `<collection>`, `<actor>` structure |
+| **Stable Plex GUIDs** | `<uniqueid type="stash" default="true">` for watch-state persistence across rescans |
 | **Studio Hierarchy** | Auto-flattens `Studio → Parent → Network` into Plex collections |
 | **Performer Integration** | Extracts names, URLs, and auto-crops face images for Plex actor view |
 | **Actor Distribution** | `PER_SCENE` (`.actor/` folders) or `CENTRAL` (shared directory) modes |

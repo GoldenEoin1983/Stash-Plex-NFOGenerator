@@ -70,9 +70,15 @@ def get_performer_image(performer):
 def write_nfo(scene, dir_path, dry_run):
     root = ET.Element("movie")
     ET.SubElement(root, "title").text = scene["title"] or "Untitled"
+    
+    # Date fields: premiered (Plex preferred) + year + releasedate (compat)
     if scene["date"]:
         ET.SubElement(root, "year").text = scene["date"][:4]
-        ET.SubElement(root, "releasedate").text = scene["date"]
+        ET.SubElement(root, "premiered").text = scene["date"]  # Plex preferred format YYYY-MM-DD
+        ET.SubElement(root, "releasedate").text = scene["date"]  # Keep for XBMC compat
+    
+    # Unique ID: Critical for Plex watch-state persistence across rescans
+    ET.SubElement(root, "uniqueid", type="stash", default="true").text = str(scene["id"])
     if scene.get("details"):
         ET.SubElement(root, "plot").text = scene["details"]
     

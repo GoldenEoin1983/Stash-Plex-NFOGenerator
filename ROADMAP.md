@@ -26,6 +26,7 @@ Core rename/NFO/actor/rollback tools exist on `master`. Active work adds Plex-lo
 - [x] Stash plugin shell (`plex_exporter.yml`) with dry-run defaults
 - [x] Scene file renaming (`stash_rename.py`)
 - [x] XBMC NFO generation (`stash_nfo_generator.py`)
+- [x] **Plex-compliant NFO fields**: `<premiered>` (YYYY-MM-DD) + `<uniqueid type="stash">` for stable GUIDs
 - [x] Performer face crop + distribution (`stash_face_cropper.py`, `stash_plex_actor_processor.py`)
 - [x] Session-scoped rollback (`stash_plex_rollback.py`)
 - [x] Agent architecture guide (`AGENTS.md`)

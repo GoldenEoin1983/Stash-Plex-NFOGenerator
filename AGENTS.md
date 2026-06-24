@@ -48,7 +48,9 @@ Automate Stash-to-Plex migration: rename files, generate XBMC-compatible `.nfo` 
 <movie>
   <title>...</title>
   <year>YYYY</year>
-  <releasedate>YYYY-MM-DD</releasedate>
+  <premiered>YYYY-MM-DD</premiered>  <!-- Plex preferred date field -->
+  <releasedate>YYYY-MM-DD</releasedate>  <!-- XBMC compat -->
+  <uniqueid type="stash" default="true">scene_id</uniqueid>  <!-- Stable GUID for watch-state -->
   <studio>Primary Studio</studio>
   <collection>Studio 1</collection>
   <collection>Studio 2</collection>
@@ -112,7 +114,7 @@ plex_exporter.yml (Stash UI)
 
 | Module | Status | Notes |
 |--------|--------|-------|
-| `stash_nfo_generator.py` | ✅ Working | Emits `file://` thumbs — `http://` is planned |
+| `stash_nfo_generator.py` | ✅ Working | `<premiered>` + `<uniqueid type="stash">` added; `file://` thumbs → `http://` planned |
 | `stash_rename.py` | ✅ Working | Plex-safe naming, collision handling |
 | `stash_face_cropper.py` | ✅ Working | OpenCV face detect + center-crop fallback |
 | `stash_plex_actor_processor.py` | ✅ Working | PER_SCENE and CENTRAL modes |
