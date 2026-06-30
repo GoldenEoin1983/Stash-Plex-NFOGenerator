@@ -4,7 +4,7 @@
 
 | Item | State |
 |------|--------|
-| **Stable core (v1.0)** | `master` — rename, NFO, actors, rollback |
+| **Stable core (v1.0)** | `main` — rename, NFO, actors, rollback |
 | **Active work** | Branch `Incorporating-Galleries` — `stash_nfo_assets.py` (posters/gallery assets) |
 | **Tracker** | See [`ROADMAP.md`](ROADMAP.md) for done / in-progress / next-up (update when completing tasks) |
 | **Rules** | See `Stashapp Library Migration to Plex - Project Context Document.md` for MUST/SHOULD constraints |
@@ -121,7 +121,7 @@ plex_exporter.yml (Stash UI)
 | `stash_plex_rollback.py` | ✅ Working | Session-scoped log parsing |
 | `main.py` | ⚠️ Stub | Placeholder only — not wired to plugin tasks |
 | HTTP actor image server | 🔲 Planned v2 | Required before `http://` thumbs can be used |
-| Auto-scan mutation post-rename | 🔲 Planned v2 | |
+| Auto-scan mutation post-assets | ✅ Implemented | `trigger_stash_scan()` in `stash_nfo_assets.py`; fires after asset downloads |
 | Tag/genre mapping | 🔲 Planned v2 | Prefer tag names over IDs |
 | Progress UI for long tasks | 🔲 Planned v2 | |
 

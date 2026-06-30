@@ -66,3 +66,4 @@ tasks:
     defaultArgs:
       actor_save_mode: "${actor_save_mode}"
       actor_central_dir: "${actor_central_dir}"
+      dry_run: "${dry_run}"
