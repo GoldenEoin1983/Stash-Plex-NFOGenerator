@@ -15,11 +15,16 @@ uv sync
 # Run a script manually (simulating Stash invocation)
 echo '{"server_connection":{"Scheme":"http","Host":"localhost","Port":9999,"SessionCookie":{"Name":"session","Value":"<token>"}},"args":{"studio":"","dry_run":true}}' | uv run python stash_rename.py
 
-# Lint
-uv run ruff check .
+# Lint / format — use uvx, NOT `uv run`, on Alpine/musl (see Environment note)
+uvx ruff@0.9.0 check .
+uvx ruff@0.9.0 format .
 ```
 
 There is no automated test suite. Testing is done manually via Stash UI with `dry_run=true` on ≤5 scenes, then verifying `stash_plex_migration.log`.
+
+### Environment gotcha (Alpine/musl)
+
+`uv sync`/`uv run` fail here — `opencv-python-headless` has no musl wheel. Run Python tooling via `uvx` (isolated env) or in the glibc `Ubuntu` WSL distro. ruff is configured in `pyproject.toml` (`[tool.ruff]`: `E,F,I,UP,B`, line-length 100); a `PostToolUse` hook (`.claude/hooks/ruff-fix.sh`) auto-fixes/formats edited `*.py` via `uvx`. Existing code is not yet ruff-clean (~103 findings) — the hook only touches files you edit.
 
 ## Architecture
 
