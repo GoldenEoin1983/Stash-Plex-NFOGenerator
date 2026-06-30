@@ -9,3 +9,6 @@ stash_plex_migration.log
 Thumbs.db
 .venv
 .kilo
+
+# Claude Code — personal/machine-specific overrides (shared config is committed)
+.claude/settings.local.json
